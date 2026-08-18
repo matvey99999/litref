@@ -410,165 +410,6 @@
             border: 1px solid rgba(180, 0, 0, 0.15);
         }
 
-        /* === КНОПКА СКРИМЕРА === */
-        .scare-btn-container {
-            text-align: center;
-            margin: 20px 0 25px;
-        }
-
-        .scare-btn {
-            background: linear-gradient(135deg, #1a0000, #3a0000);
-            color: #ff3333;
-            border: 2px solid #ff0000;
-            padding: 15px 40px;
-            font-size: 1.3rem;
-            font-weight: 800;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1), inset 0 0 30px rgba(255, 0, 0, 0.05);
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-            overflow: hidden;
-            animation: btnPulse 2s infinite alternate;
-        }
-
-        .scare-btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 0, 0, 0.1), transparent 60%);
-            animation: btnGlow 3s infinite alternate;
-        }
-
-        @keyframes btnGlow {
-            0% { transform: scale(0.8); opacity: 0.3; }
-            100% { transform: scale(1.5); opacity: 0.8; }
-        }
-
-        @keyframes btnPulse {
-            0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.1); }
-            100% { box-shadow: 0 0 60px rgba(255, 0, 0, 0.3), 0 0 100px rgba(255, 0, 0, 0.1); }
-        }
-
-        .scare-btn:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, #2a0000, #5a0000);
-            box-shadow: 0 0 80px rgba(255, 0, 0, 0.4);
-        }
-
-        .scare-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* === СКРИМЕР (оверлей) === */
-        .screamer-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: screamerAppear 0.1s ease-out;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-        }
-
-        .screamer-overlay.active {
-            display: flex;
-        }
-
-        @keyframes screamerAppear {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .screamer-content {
-            text-align: center;
-            animation: screamerShake 0.3s infinite alternate;
-            position: relative;
-        }
-
-        @keyframes screamerShake {
-            0% { transform: translate(-5px, -5px) rotate(-1deg); }
-            25% { transform: translate(5px, -2px) rotate(1deg); }
-            50% { transform: translate(-3px, 5px) rotate(-0.5deg); }
-            75% { transform: translate(3px, -3px) rotate(0.5deg); }
-            100% { transform: translate(-2px, 2px) rotate(-0.3deg); }
-        }
-
-        .screamer-face {
-            font-size: 200px;
-            line-height: 1;
-            animation: facePulse 0.8s infinite alternate;
-            filter: drop-shadow(0 0 80px rgba(255, 0, 0, 0.8));
-            position: relative;
-            display: inline-block;
-        }
-
-        @keyframes facePulse {
-            0% { transform: scale(0.9); filter: drop-shadow(0 0 40px rgba(255, 0, 0, 0.6)); }
-            100% { transform: scale(1.1); filter: drop-shadow(0 0 120px rgba(255, 0, 0, 1)); }
-        }
-
-        /* Кровавые пятна на скримере */
-        .screamer-blood {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(200, 0, 0, 0.3), transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(200, 0, 0, 0.3), transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(200, 0, 0, 0.1), transparent 60%);
-            pointer-events: none;
-            animation: bloodSplatter 2s infinite alternate;
-        }
-
-        @keyframes bloodSplatter {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .screamer-text {
-            color: #ff0000;
-            font-size: 2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-top: 30px;
-            text-shadow: 0 0 40px rgba(255, 0, 0, 0.5);
-            animation: textBlood 0.5s infinite alternate;
-            letter-spacing: 5px;
-        }
-
-        @keyframes textBlood {
-            0% { opacity: 0.7; text-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
-            100% { opacity: 1; text-shadow: 0 0 60px rgba(255, 0, 0, 0.8); }
-        }
-
-        .screamer-close-hint {
-            color: #664444;
-            font-size: 0.9rem;
-            margin-top: 20px;
-            opacity: 0.6;
-            animation: hintBlink 1.5s infinite alternate;
-        }
-
-        @keyframes hintBlink {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
-        }
-
         /* === БАДЖИ === */
         .badge-section {
             display: flex;
@@ -763,9 +604,6 @@
             .project-item strong { font-size: 1rem; }
             .horror-scene { transform: scale(0.7); }
             .cartoon-area { height: 120px; }
-            .screamer-face { font-size: 100px; }
-            .screamer-text { font-size: 1.2rem; }
-            .scare-btn { padding: 12px 25px; font-size: 1rem; }
         }
 
         @media (max-width: 430px) {
@@ -773,8 +611,6 @@
             .header h1 { font-size: 1.6rem; }
             .horror-scene { transform: scale(0.5); }
             .cartoon-area { height: 90px; }
-            .screamer-face { font-size: 70px; }
-            .screamer-text { font-size: 1rem; }
         }
 
         .footer-note {
@@ -837,11 +673,6 @@
             <h1>Матвей Вадимович</h1>
             <div class="tagline">⚡ Начинающий Backend-разработчик</div>
             <div class="location">📍 Курортный поселок Нарочь, Беларусь</div>
-        </div>
-
-        <!-- КНОПКА СКРИМЕРА -->
-        <div class="scare-btn-container">
-            <button class="scare-btn" id="scareBtn">🔪 НЕ НАЖИМАТЬ!</button>
         </div>
 
         <!-- БАДЖИ -->
@@ -929,99 +760,8 @@
         </div>
     </div>
 
-    <!-- СКРИМЕР ОВЕРЛЕЙ -->
-    <div class="screamer-overlay" id="screamerOverlay">
-        <div class="screamer-content">
-            <div class="screamer-blood"></div>
-            <div class="screamer-face">💀</div>
-            <div class="screamer-text">🔪 ТЫ УМРЁШЬ! 🔪</div>
-            <div class="screamer-close-hint">👆 Нажми в любом месте, чтобы закрыть</div>
-        </div>
-    </div>
-
     <script>
         (function() {
-            // === СКРИМЕР ===
-            const scareBtn = document.getElementById('scareBtn');
-            const screamer = document.getElementById('screamerOverlay');
-            let isScreamerActive = false;
-            let screamAudio = null;
-
-            // Создаём аудио-эффект (имитация скримера)
-            function createScreamSound() {
-                try {
-                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const oscillator = audioCtx.createOscillator();
-                    const gainNode = audioCtx.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    
-                    oscillator.type = 'sawtooth';
-                    oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-                    oscillator.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.5);
-                    
-                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-                    
-                    oscillator.start(audioCtx.currentTime);
-                    oscillator.stop(audioCtx.currentTime + 0.5);
-                } catch (e) {
-                    // Если звук не поддерживается - игнорируем
-                }
-            }
-
-            // Функция показа скримера
-            function showScreamer() {
-                if (isScreamerActive) return;
-                isScreamerActive = true;
-                
-                // Воспроизводим звук
-                createScreamSound();
-                
-                // Показываем оверлей
-                screamer.classList.add('active');
-                
-                // Блокируем прокрутку
-                document.body.style.overflow = 'hidden';
-                
-                // Небольшая вибрация страницы (имитация испуга)
-                document.body.style.animation = 'screamerShake 0.1s 5';
-                
-                // Через 0.5 секунд убираем вибрацию
-                setTimeout(() => {
-                    document.body.style.animation = '';
-                }, 500);
-            }
-
-            // Функция скрытия скримера
-            function hideScreamer() {
-                screamer.classList.remove('active');
-                document.body.style.overflow = '';
-                document.body.style.animation = '';
-                isScreamerActive = false;
-            }
-
-            // Нажатие на кнопку
-            scareBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                showScreamer();
-            });
-
-            // Нажатие на оверлей (закрытие)
-            screamer.addEventListener('click', function(e) {
-                if (e.target === screamer || e.target.closest('.screamer-content')) {
-                    hideScreamer();
-                }
-            });
-
-            // Закрытие по ESC
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && isScreamerActive) {
-                    hideScreamer();
-                }
-            });
-
             // === РАСКРЫТИЕ КАРТОЧЕК СКИЛЛОВ ===
             const cards = document.querySelectorAll('.skill-card');
 
