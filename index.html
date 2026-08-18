@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Матвей | Начинающий Backend-разработчик</title>
+    <title>Матвей Вадимович | Начинающий Backend-разработчик</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Creepster&display=swap" rel="stylesheet">
     <style>
         * {
@@ -359,6 +359,25 @@
             letter-spacing: -1px;
             text-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
             animation: titleBlood 3s infinite alternate;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Кровавый эффект на имя */
+        .header h1::after {
+            content: 'Матвей Вадимович';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 0, 0, 0.1) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: blur(4px);
+            opacity: 0.5;
+            z-index: -1;
         }
 
         @keyframes titleBlood {
@@ -578,7 +597,7 @@
         /* === АДАПТИВ === */
         @media (max-width: 650px) {
             .card { padding: 25px 18px; border-radius: 40px; }
-            .header h1 { font-size: 2.2rem; }
+            .header h1 { font-size: 2rem; }
             .badge-section { gap: 8px; }
             .badge { font-size: 0.7rem; padding: 5px 14px; }
             .skills-grid { grid-template-columns: 1fr 1fr; }
@@ -589,7 +608,7 @@
 
         @media (max-width: 430px) {
             .skills-grid { grid-template-columns: 1fr; }
-            .header h1 { font-size: 1.8rem; }
+            .header h1 { font-size: 1.6rem; }
             .horror-scene { transform: scale(0.5); }
             .cartoon-area { height: 90px; }
         }
@@ -649,9 +668,9 @@
             </div>
         </div>
 
-        <!-- ШАПКА -->
+        <!-- ШАПКА С ОТЧЕСТВОМ -->
         <div class="header">
-            <h1>Матвей</h1>
+            <h1>Матвей Вадимович</h1>
             <div class="tagline">⚡ Начинающий Backend-разработчик</div>
             <div class="location">📍 Курортный поселок Нарочь, Беларусь</div>
         </div>
@@ -737,7 +756,7 @@
         </div>
 
         <div class="footer-note">
-            ⚡ Матвей, 15 лет · Нарочь · Беларусь
+            ⚡ Матвей Вадимович, 15 лет · Нарочь · Беларусь
         </div>
     </div>
 
