@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Матвей | Начинающий Backend-разработчик</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0000;
+            min-height: 100vh;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Фон с эффектом крови */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(180, 0, 0, 0.3), transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(120, 0, 0, 0.4), transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(80, 0, 0, 0.2), transparent 70%),
+                repeating-linear-gradient(45deg, 
+                    transparent, 
+                    transparent 100px,
+                    rgba(100, 0, 0, 0.02) 100px,
+                    rgba(100, 0, 0, 0.02) 101px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Кровавый туман */
+        .blood-mist {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(200, 0, 0, 0.08), transparent 40%),
+                radial-gradient(ellipse at 80% 70%, rgba(150, 0, 0, 0.06), transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bloodMist 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes bloodMist {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Кровавые капли (анимация) */
+        .blood-drops {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .drop {
+            position: absolute;
+            top: -20px;
+            width: 4px;
+            background: rgba(180, 0, 0, 0.6);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: dropFall linear infinite;
+        }
+
+        .drop:nth-child(1) { left: 10%; animation-duration: 4s; animation-delay: 0s; height: 25px; }
+        .drop:nth-child(2) { left: 25%; animation-duration: 5s; animation-delay: 1s; height: 35px; width: 5px; }
+        .drop:nth-child(3) { left: 40%; animation-duration: 3.5s; animation-delay: 0.5s; height: 20px; }
+        .drop:nth-child(4) { left: 55%; animation-duration: 6s; animation-delay: 2s; height: 40px; width: 6px; }
+        .drop:nth-child(5) { left: 70%; animation-duration: 4.5s; animation-delay: 0.8s; height: 28px; }
+        .drop:nth-child(6) { left: 85%; animation-duration: 5.5s; animation-delay: 1.5s; height: 32px; }
+        .drop:nth-child(7) { left: 15%; animation-duration: 3.8s; animation-delay: 2.5s; height: 22px; }
+        .drop:nth-child(8) { left: 50%; animation-duration: 4.2s; animation-delay: 3s; height: 30px; width: 5px; }
+        .drop:nth-child(9) { left: 65%; animation-duration: 5.2s; animation-delay: 0.3s; height: 26px; }
+        .drop:nth-child(10) { left: 90%; animation-duration: 3.9s; animation-delay: 1.8s; height: 18px; }
+
+        @keyframes dropFall {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+        }
+
+        /* === ГЛАВНАЯ КАРТОЧКА === */
+        .card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(10, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.9), 0 0 0 2px rgba(180, 0, 0, 0.3), 0 0 40px rgba(200, 0, 0, 0.1);
+            padding: 40px 35px;
+            position: relative;
+            z-index: 5;
+            border: 1px solid rgba(180, 0, 0, 0.15);
+        }
+
+        /* === АНИМАЦИЯ: ЖУТКИЙ ПЕРСОНАЖ === */
+        .cartoon-area {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            height: 160px;
+            position: relative;
+        }
+
+        .horror-scene {
+            position: relative;
+            width: 220px;
+            height: 160px;
+        }
+
+        /* Красный свет снизу */
+        .red-glow {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 80px;
+            background: radial-gradient(ellipse at center, rgba(200, 0, 0, 0.3), transparent);
+            filter: blur(20px);
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { opacity: 0.4; transform: translateX(-50%) scale(0.8); }
+            100% { opacity: 0.8; transform: translateX(-50%) scale(1.3); }
+        }
+
+        /* Тень */
+        .shadow-horror {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 20px;
+            background: radial-gradient(ellipse, rgba(100, 0, 0, 0.4), transparent);
+            border-radius: 50%;
+            animation: shadowHorror 3s infinite alternate;
+        }
+
+        @keyframes shadowHorror {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.4; }
+            100% { transform: translateX(-50%) scale(1.3); opacity: 0.2; }
+        }
+
+        /* Фигура в капюшоне */
+        .hooded-figure {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 140px;
+            animation: figureFloat 3.5s infinite ease-in-out;
+        }
+
+        @keyframes figureFloat {
+            0% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+            50% { transform: translateX(-50%) translateY(-8px) rotate(2deg); }
+            100% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+        }
+
+        /* Плащ (рваный) */
+        .cloak {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75px;
+            height: 95px;
+            background: linear-gradient(180deg, #1a0a0a, #0a0000);
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+            border-radius: 30px 30px 10px 10px;
+            box-shadow: inset -5px 0 20px rgba(200, 0, 0, 0.1);
+            border: 1px solid rgba(100, 0, 0, 0.2);
+        }
+
+        /* Рваные края плаща */
+        .cloak::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(180deg, transparent, rgba(180, 0, 0, 0.1));
+            clip-path: polygon(0 0, 10% 100%, 20% 20%, 30% 100%, 40% 30%, 50% 100%, 60% 10%, 70% 100%, 80% 40%, 90% 100%, 100% 0);
+        }
+
+        /* Капюшон */
+        .hood {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 65px;
+            background: linear-gradient(180deg, #1a0a0a, #0a0000);
+            border-radius: 50% 50% 20% 20%;
+            border: 1px solid rgba(100, 0, 0, 0.2);
+        }
+
+        /* Темнота внутри капюшона */
+        .hood-dark {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 35px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: inset 0 0 20px rgba(200, 0, 0, 0.2);
+        }
+
+        /* Красные глаза */
+        .red-eyes {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 12px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 2;
+        }
+
+        .red-eye {
+            width: 10px;
+            height: 12px;
+            background: radial-gradient(circle, #ff0000, #880000);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.4);
+            animation: eyeGlow 1.5s infinite alternate;
+        }
+
+        @keyframes eyeGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.6), 0 0 20px rgba(255, 0, 0, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.6); }
+        }
+
+        /* Рука с ножом */
+        .knife-hand {
+            position: absolute;
+            right: -15px;
+            bottom: 30px;
+            width: 15px;
+            height: 40px;
+            transform: rotate(-30deg);
+            animation: knifeMove 2.5s infinite alternate ease-in-out;
+        }
+
+        .knife-hand::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(180deg, #cccccc, #888888);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(200, 200, 200, 0.2);
+        }
+
+        .knife-hand::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 15px;
+            background: #2a1a1a;
+            border-radius: 3px 3px 5px 5px;
+        }
+
+        @keyframes knifeMove {
+            0% { transform: rotate(-30deg) translateY(0); }
+            100% { transform: rotate(-40deg) translateY(-8px); }
+        }
+
+        /* Вторая рука (слева) */
+        .hand-left {
+            position: absolute;
+            left: -15px;
+            bottom: 25px;
+            width: 12px;
+            height: 30px;
+            background: #1a0a0a;
+            border-radius: 5px;
+            transform: rotate(20deg);
+            animation: handLeftMove 3s infinite alternate;
+        }
+
+        @keyframes handLeftMove {
+            0% { transform: rotate(20deg) translateY(0); }
+            100% { transform: rotate(30deg) translateY(-5px); }
+        }
+
+        /* Кровавые брызги (статичные на фоне персонажа) */
+        .blood-splatter {
+            position: absolute;
+            bottom: 20px;
+            left: -10px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(180, 0, 0, 0.2), transparent);
+            border-radius: 50%;
+            filter: blur(5px);
+        }
+
+        .blood-splatter.right {
+            left: auto;
+            right: -10px;
+        }
+
+        /* === ШАПКА === */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff0000, #880000, #ff0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+            text-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+            animation: titleBlood 3s infinite alternate;
+        }
+
+        @keyframes titleBlood {
+            0% { text-shadow: 0 0 20px rgba(255, 0, 0, 0.2); }
+            100% { text-shadow: 0 0 50px rgba(255, 0, 0, 0.5), 0 0 80px rgba(200, 0, 0, 0.2); }
+        }
+
+        .header .tagline {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #aa5555;
+            background: rgba(30, 0, 0, 0.5);
+            display: inline-block;
+            padding: 8px 28px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            margin-top: 4px;
+            border: 1px solid rgba(180, 0, 0, 0.2);
+        }
+
+        .header .location {
+            margin-top: 10px;
+            font-weight: 500;
+            color: #884444;
+            background: rgba(20, 0, 0, 0.5);
+            display: inline-block;
+            padding: 4px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(180, 0, 0, 0.15);
+        }
+
+        /* === БАДЖИ === */
+        .badge-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0 30px;
+        }
+
+        .badge {
+            background: rgba(20, 0, 0, 0.8);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #cc8888;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3), 0 4px 15px rgba(0,0,0,0.2);
+            transition: 0.1s ease;
+            border: 1px solid rgba(180, 0, 0, 0.15);
+            letter-spacing: 0.4px;
+        }
+
+        .badge.python { background: rgba(180, 0, 0, 0.2); border-color: #cc0000; color: #ff6666; }
+        .badge.django { background: rgba(0, 180, 0, 0.1); border-color: #006600; color: #66aa66; }
+        .badge.js { background: rgba(180, 180, 0, 0.1); border-color: #888800; color: #bbbb44; }
+        .badge.git { background: rgba(180, 100, 0, 0.15); border-color: #884400; color: #cc8844; }
+        .badge.sql { background: rgba(0, 100, 180, 0.1); border-color: #004488; color: #4488bb; }
+        .badge.api { background: rgba(150, 0, 180, 0.1); border-color: #660088; color: #aa66bb; }
+
+        /* === ПРОЕКТЫ === */
+        .projects {
+            background: rgba(10, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 25px 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(180, 0, 0, 0.1);
+        }
+
+        .projects h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #cc8888;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-item {
+            background: rgba(20, 0, 0, 0.5);
+            border-radius: 28px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.15s;
+            border: 1px solid rgba(180, 0, 0, 0.1);
+        }
+
+        .project-item:last-child { margin-bottom: 0; }
+
+        .project-item strong {
+            display: block;
+            font-size: 1.2rem;
+            color: #dd9999;
+            margin-bottom: 4px;
+        }
+
+        .project-item a {
+            color: #ff4444;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+            transition: 0.15s;
+        }
+
+        .project-item a:hover {
+            color: #ff6666;
+            border-bottom-color: #ff0000;
+        }
+
+        .project-item .desc {
+            margin-top: 6px;
+            color: #aa7777;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* === СКИЛЛЫ === */
+        .skills-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #cc8888;
+            margin-bottom: 18px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-card {
+            background: rgba(20, 0, 0, 0.5);
+            border-radius: 30px;
+            padding: 18px 16px 14px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(180, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(200, 0, 0, 0.05), transparent 60%);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        .skill-card:hover {
+            transform: scale(1.02);
+            border-color: rgba(180, 0, 0, 0.3);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.3), 0 0 30px rgba(200, 0, 0, 0.05);
+        }
+
+        .skill-card .skill-name {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #dd9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .skill-card .skill-emoji {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .skill-card .skill-desc {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s, margin 0.2s;
+            color: #aa7777;
+            font-weight: 500;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-top: 0px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 0 12px;
+            border: 1px solid rgba(180, 0, 0, 0.05);
+        }
+
+        .skill-card.open .skill-desc {
+            max-height: 180px;
+            opacity: 1;
+            margin-top: 14px;
+            padding: 12px 12px;
+        }
+
+        .skill-card .click-hint {
+            font-size: 0.7rem;
+            color: #664444;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            margin-top: 6px;
+            opacity: 0.7;
+        }
+
+        /* === АДАПТИВ === */
+        @media (max-width: 650px) {
+            .card { padding: 25px 18px; border-radius: 40px; }
+            .header h1 { font-size: 2.2rem; }
+            .badge-section { gap: 8px; }
+            .badge { font-size: 0.7rem; padding: 5px 14px; }
+            .skills-grid { grid-template-columns: 1fr 1fr; }
+            .project-item strong { font-size: 1rem; }
+            .horror-scene { transform: scale(0.7); }
+            .cartoon-area { height: 120px; }
+        }
+
+        @media (max-width: 430px) {
+            .skills-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8rem; }
+            .horror-scene { transform: scale(0.5); }
+            .cartoon-area { height: 90px; }
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #664444;
+            font-weight: 500;
+            border-top: 1px solid rgba(180, 0, 0, 0.1);
+            padding-top: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Кровавый туман -->
+    <div class="blood-mist"></div>
+
+    <!-- Кровавые капли -->
+    <div class="blood-drops">
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+        <div class="drop"></div>
+    </div>
+
+    <div class="card">
+
+        <!-- ЖУТКАЯ АНИМАЦИЯ -->
+        <div class="cartoon-area">
+            <div class="horror-scene">
+                <div class="red-glow"></div>
+                <div class="shadow-horror"></div>
+                <div class="blood-splatter"></div>
+                <div class="blood-splatter right"></div>
+                
+                <div class="hooded-figure">
+                    <div class="hood">
+                        <div class="hood-dark"></div>
+                        <div class="red-eyes">
+                            <div class="red-eye"></div>
+                            <div class="red-eye"></div>
+                        </div>
+                    </div>
+                    <div class="cloak"></div>
+                    <div class="knife-hand"></div>
+                    <div class="hand-left"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ШАПКА -->
+        <div class="header">
+            <h1>Матвей</h1>
+            <div class="tagline">⚡ Начинающий Backend-разработчик</div>
+            <div class="location">📍 Курортный поселок Нарочь, Беларусь</div>
+        </div>
+
+        <!-- БАДЖИ -->
+        <div class="badge-section">
+            <span class="badge python">🐍 Python</span>
+            <span class="badge django">🌿 Django</span>
+            <span class="badge js">🟨 JavaScript</span>
+            <span class="badge git">🔀 Git</span>
+            <span class="badge sql">🗄️ SQL</span>
+            <span class="badge api">🔗 REST API</span>
+            <span class="badge" style="background:rgba(180,0,0,0.15); border-color:#cc0000; color:#ff6666;">🎓 itMouse</span>
+            <span class="badge" style="background:rgba(200,0,0,0.1); border-color:#880000; color:#cc4444;">🚀 15 лет</span>
+        </div>
+
+        <!-- ПРОЕКТЫ -->
+        <div class="projects">
+            <h2>📁 Мои проекты</h2>
+
+            <div class="project-item">
+                <strong>🎵 Трек «Стекло не бьется»</strong>
+                <div class="desc">
+                    <a href="https://suno.com/s/9O2ldKqHV223dlXz" target="_blank">Слушать на Suno</a> — мой первый музыкальный эксперимент.
+                </div>
+            </div>
+
+            <div class="project-item">
+                <strong>🛒 Интернет-магазин (Django)</strong>
+                <div class="desc">
+                    Полноценный интернет-магазин на Python + Django. Реализованы модели, админка, корзина, заказы.
+                </div>
+            </div>
+
+            <div class="project-item">
+                <strong>🧑‍💻 Школа itMouse</strong>
+                <div class="desc">
+                    Учусь разработке, создаю проекты и прокачиваю скиллы каждый день.
+                </div>
+            </div>
+        </div>
+
+        <!-- СКИЛЛЫ -->
+        <div class="skills-title">🧠 Мои навыки <span style="font-size:0.9rem; font-weight:500; color:#664444;">(нажми на карточку)</span></div>
+        <div class="skills-grid" id="skillsGrid">
+
+            <div class="skill-card">
+                <div class="skill-name"><span class="skill-emoji">🐍</span> Python</div>
+                <div class="skill-desc">Уверенное владение: ООП, работа с файлами, декораторы, генераторы, асинхронность.</div>
+                <div class="click-hint">▼ нажми</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name"><span class="skill-emoji">🌿</span> Django</div>
+                <div class="skill-desc">Создаю веб-приложения: модели, views, templates, админка, маршруты, формы.</div>
+                <div class="click-hint">▼ нажми</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name"><span class="skill-emoji">🟨</span> JavaScript</div>
+                <div class="skill-desc">Базовый JS: DOM-манипуляции, события, fetch, работа с API.</div>
+                <div class="click-hint">▼ нажми</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name"><span class="skill-emoji">🗄️</span> SQL</div>
+                <div class="skill-desc">PostgreSQL, SQLite. Сложные запросы, JOIN, агрегации, индексы.</div>
+                <div class="click-hint">▼ нажми</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name"><span class="skill-emoji">🔗</span> REST API</div>
+                <div class="skill-desc">Создание и интеграция RESTful API, JSON, методы GET/POST/PUT/DELETE.</div>
+                <div class="click-hint">▼ нажми</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-name"><span class="skill-emoji">🧰</span> Git / GitHub</div>
+                <div class="skill-desc">Версионирование, ветки, merge, pull requests, работа в команде.</div>
+                <div class="click-hint">▼ нажми</div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            ⚡ Матвей, 15 лет · Нарочь · Беларусь
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const cards = document.querySelectorAll('.skill-card');
+
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    this.classList.toggle('open');
+                    const hint = this.querySelector('.click-hint');
+                    if (hint) {
+                        if (this.classList.contains('open')) {
+                            hint.textContent = '▲ скрыть';
+                        } else {
+                            hint.textContent = '▼ нажми';
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>
