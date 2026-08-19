@@ -410,6 +410,207 @@
             border: 1px solid rgba(180, 0, 0, 0.15);
         }
 
+        /* === КНОПКА С ВЕСЁЛЫМ СМАЙЛИКОМ === */
+        .smile-btn-container {
+            text-align: center;
+            margin: 20px 0 25px;
+        }
+
+        .smile-btn {
+            background: linear-gradient(135deg, #1a0000, #3a0000);
+            color: #ffcc00;
+            border: 2px solid #ffcc00;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.1), inset 0 0 30px rgba(255, 204, 0, 0.05);
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            overflow: hidden;
+            animation: btnPulse 2s infinite alternate;
+        }
+
+        .smile-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.1), transparent 60%);
+            animation: btnGlow 3s infinite alternate;
+        }
+
+        @keyframes btnGlow {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0.8; }
+        }
+
+        @keyframes btnPulse {
+            0% { box-shadow: 0 0 20px rgba(255, 204, 0, 0.1); }
+            100% { box-shadow: 0 0 60px rgba(255, 204, 0, 0.3), 0 0 100px rgba(255, 204, 0, 0.1); }
+        }
+
+        .smile-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #2a0000, #5a0000);
+            box-shadow: 0 0 80px rgba(255, 204, 0, 0.4);
+        }
+
+        .smile-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* === ВЕСЁЛЫЙ СМАЙЛИК (оверлей) === */
+        .smile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: smileAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .smile-overlay.active {
+            display: flex;
+        }
+
+        @keyframes smileAppear {
+            0% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .smile-content {
+            text-align: center;
+            animation: smileBounce 1s infinite alternate ease-in-out;
+            position: relative;
+        }
+
+        @keyframes smileBounce {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        .smile-emoji {
+            font-size: 250px;
+            line-height: 1;
+            animation: smileSpin 8s infinite linear;
+            filter: drop-shadow(0 0 80px rgba(255, 204, 0, 0.6));
+            display: inline-block;
+        }
+
+        @keyframes smileSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Разноцветные звёздочки вокруг смайлика */
+        .sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 30px;
+            animation: sparkleFloat 3s infinite alternate ease-in-out;
+        }
+
+        .sparkle:nth-child(1) { top: -40px; left: -40px; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: -40px; right: -40px; animation-delay: 0.5s; }
+        .sparkle:nth-child(3) { bottom: -40px; left: -40px; animation-delay: 1s; }
+        .sparkle:nth-child(4) { bottom: -40px; right: -40px; animation-delay: 1.5s; }
+        .sparkle:nth-child(5) { top: -60px; left: 50%; transform: translateX(-50%); animation-delay: 0.8s; }
+        .sparkle:nth-child(6) { bottom: -60px; left: 50%; transform: translateX(-50%); animation-delay: 1.8s; }
+
+        @keyframes sparkleFloat {
+            0% { transform: translateY(0px) scale(0.8) rotate(0deg); opacity: 0.3; }
+            100% { transform: translateY(-20px) scale(1.2) rotate(180deg); opacity: 1; }
+        }
+
+        .smile-text {
+            color: #ffcc00;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-top: 30px;
+            text-shadow: 0 0 40px rgba(255, 204, 0, 0.5);
+            animation: textHappy 1s infinite alternate;
+            letter-spacing: 5px;
+        }
+
+        @keyframes textHappy {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .smile-close-hint {
+            color: #886644;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            opacity: 0.6;
+            animation: hintBlink 1.5s infinite alternate;
+        }
+
+        @keyframes hintBlink {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Конфетти-эффект при появлении */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall linear infinite;
+        }
+
+        .confetti:nth-child(1) { left: 5%; animation-duration: 4s; animation-delay: 0s; background: #ff0000; }
+        .confetti:nth-child(2) { left: 15%; animation-duration: 3.5s; animation-delay: 0.5s; background: #ffcc00; }
+        .confetti:nth-child(3) { left: 25%; animation-duration: 5s; animation-delay: 0.2s; background: #00ff00; }
+        .confetti:nth-child(4) { left: 35%; animation-duration: 4.5s; animation-delay: 0.8s; background: #ff00ff; }
+        .confetti:nth-child(5) { left: 45%; animation-duration: 3.8s; animation-delay: 0.3s; background: #00ccff; }
+        .confetti:nth-child(6) { left: 55%; animation-duration: 4.2s; animation-delay: 1s; background: #ff6600; }
+        .confetti:nth-child(7) { left: 65%; animation-duration: 5.2s; animation-delay: 0.6s; background: #ff00ff; }
+        .confetti:nth-child(8) { left: 75%; animation-duration: 3.3s; animation-delay: 0.9s; background: #ffff00; }
+        .confetti:nth-child(9) { left: 85%; animation-duration: 4.7s; animation-delay: 0.4s; background: #00ff00; }
+        .confetti:nth-child(10) { left: 95%; animation-duration: 3.9s; animation-delay: 0.7s; background: #ff0000; }
+        .confetti:nth-child(11) { left: 10%; animation-duration: 4.8s; animation-delay: 1.2s; background: #ffcc00; }
+        .confetti:nth-child(12) { left: 50%; animation-duration: 3.6s; animation-delay: 0.1s; background: #00ccff; }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+        }
+
         /* === БАДЖИ === */
         .badge-section {
             display: flex;
@@ -604,6 +805,9 @@
             .project-item strong { font-size: 1rem; }
             .horror-scene { transform: scale(0.7); }
             .cartoon-area { height: 120px; }
+            .smile-emoji { font-size: 150px; }
+            .smile-text { font-size: 1.8rem; }
+            .smile-btn { padding: 12px 25px; font-size: 1rem; }
         }
 
         @media (max-width: 430px) {
@@ -611,6 +815,9 @@
             .header h1 { font-size: 1.6rem; }
             .horror-scene { transform: scale(0.5); }
             .cartoon-area { height: 90px; }
+            .smile-emoji { font-size: 100px; }
+            .smile-text { font-size: 1.2rem; }
+            .sparkle { font-size: 20px; }
         }
 
         .footer-note {
@@ -673,6 +880,11 @@
             <h1>Матвей Вадимович</h1>
             <div class="tagline">⚡ Начинающий Backend-разработчик</div>
             <div class="location">📍 Курортный поселок Нарочь, Беларусь</div>
+        </div>
+
+        <!-- КНОПКА С ВЕСЁЛЫМ СМАЙЛИКОМ -->
+        <div class="smile-btn-container">
+            <button class="smile-btn" id="smileBtn">😊 НАЖМИ МЕНЯ!</button>
         </div>
 
         <!-- БАДЖИ -->
@@ -760,8 +972,90 @@
         </div>
     </div>
 
+    <!-- ВЕСЁЛЫЙ СМАЙЛИК ОВЕРЛЕЙ -->
+    <div class="smile-overlay" id="smileOverlay">
+        <div class="smile-content">
+            <div class="sparkles">
+                <span class="sparkle">✨</span>
+                <span class="sparkle">⭐</span>
+                <span class="sparkle">🌟</span>
+                <span class="sparkle">✨</span>
+                <span class="sparkle">⭐</span>
+                <span class="sparkle">🌟</span>
+            </div>
+            <div class="smile-emoji">😊</div>
+            <div class="smile-text">🎉 ТЫ КРУТ! 🎉</div>
+            <div class="smile-close-hint">👆 Нажми в любом месте, чтобы закрыть</div>
+        </div>
+    </div>
+
+    <!-- Конфетти -->
+    <div class="confetti-container" id="confettiContainer">
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+    </div>
+
     <script>
         (function() {
+            // === ВЕСЁЛЫЙ СМАЙЛИК ===
+            const smileBtn = document.getElementById('smileBtn');
+            const smileOverlay = document.getElementById('smileOverlay');
+            const confettiContainer = document.getElementById('confettiContainer');
+            let isSmileActive = false;
+
+            // Функция показа смайлика
+            function showSmile() {
+                if (isSmileActive) return;
+                isSmileActive = true;
+                
+                // Показываем оверлей
+                smileOverlay.classList.add('active');
+                
+                // Показываем конфетти
+                confettiContainer.style.display = 'block';
+                
+                // Блокируем прокрутку
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Функция скрытия смайлика
+            function hideSmile() {
+                smileOverlay.classList.remove('active');
+                confettiContainer.style.display = 'none';
+                document.body.style.overflow = '';
+                isSmileActive = false;
+            }
+
+            // Нажатие на кнопку
+            smileBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                showSmile();
+            });
+
+            // Нажатие на оверлей (закрытие)
+            smileOverlay.addEventListener('click', function(e) {
+                if (e.target === smileOverlay || e.target.closest('.smile-content')) {
+                    hideSmile();
+                }
+            });
+
+            // Закрытие по ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isSmileActive) {
+                    hideSmile();
+                }
+            });
+
             // === РАСКРЫТИЕ КАРТОЧЕК СКИЛЛОВ ===
             const cards = document.querySelectorAll('.skill-card');
 
